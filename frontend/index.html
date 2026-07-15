@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskFlow - Task Manager</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= AUTH SCREEN ================= -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <h1 class="brand">TaskFlow</h1>
+      <p class="tagline">Organize your work, one task at a time.</p>
+
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Login</button>
+        <button class="tab-btn" data-tab="register">Register</button>
+      </div>
+
+      <form id="loginForm" class="auth-form active">
+        <input type="text" id="loginUsername" placeholder="Username" required>
+        <input type="password" id="loginPassword" placeholder="Password" required>
+        <button type="submit" class="btn-primary">Login</button>
+        <p class="form-error" id="loginError"></p>
+      </form>
+
+      <form id="registerForm" class="auth-form">
+        <input type="text" id="registerUsername" placeholder="Username" required minlength="3">
+        <input type="email" id="registerEmail" placeholder="Email" required>
+        <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" required minlength="6">
+        <button type="submit" class="btn-primary">Create Account</button>
+        <p class="form-error" id="registerError"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= DASHBOARD ================= -->
+  <div id="dashboard" class="dashboard hidden">
+    <header class="topbar">
+      <h1 class="brand">TaskFlow</h1>
+      <div class="topbar-right">
+        <span id="connStatus" class="conn-status offline">● offline</span>
+        <span id="welcomeUser" class="welcome-user"></span>
+        <button id="logoutBtn" class="btn-secondary">Logout</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="toolbar">
+        <button id="newTaskBtn" class="btn-primary">+ New Task</button>
+        <input type="text" id="searchInput" placeholder="Search tasks...">
+        <select id="statusFilter">
+          <option value="">All Statuses</option>
+          <option value="todo">To Do</option>
+          <option value="in_progress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+        <select id="priorityFilter">
+          <option value="">All Priorities</option>
+          <option value="low">Low</option>
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+        </select>
+      </section>
+
+      <section class="board" id="board">
+        <div class="column" data-status="todo">
+          <h2>To Do <span class="count" id="count-todo">0</span></h2>
+          <div class="task-list" id="list-todo"></div>
+        </div>
+        <div class="column" data-status="in_progress">
+          <h2>In Progress <span class="count" id="count-in_progress">0</span></h2>
+          <div class="task-list" id="list-in_progress"></div>
+        </div>
+        <div class="column" data-status="done">
+          <h2>Done <span class="count" id="count-done">0</span></h2>
+          <div class="task-list" id="list-done"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ================= TASK MODAL ================= -->
+  <div id="taskModal" class="modal hidden">
+    <div class="modal-content">
+      <h2 id="modalTitle">New Task</h2>
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+        <label>Title</label>
+        <input type="text" id="taskTitle" required maxlength="200">
+
+        <label>Description</label>
+        <textarea id="taskDescription" rows="3"></textarea>
+
+        <div class="form-row">
+          <div>
+            <label>Status</label>
+            <select id="taskStatus">
+              <option value="todo">To Do</option>
+              <option value="in_progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+          <div>
+            <label>Priority</label>
+            <select id="taskPriority">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+        </div>
+
+        <label>Due Date</label>
+        <input type="datetime-local" id="taskDueDate">
+
+        <div class="modal-actions">
+          <button type="button" id="deleteTaskBtn" class="btn-danger hidden">Delete</button>
+          <button type="button" id="cancelModalBtn" class="btn-secondary">Cancel</button>
+          <button type="submit" class="btn-primary">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
